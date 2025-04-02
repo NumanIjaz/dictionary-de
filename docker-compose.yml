@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:17
-    container_name: language_app_posgres
+    container_name: language_app_postgres
     restart: unless-stopped
     ports:
       - "5432:5432"
