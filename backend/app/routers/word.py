@@ -20,5 +20,5 @@ async def get_words(skip: int = 0, limit: int = 100, db: Session = Depends(get_d
 
 
 @word_router.post("/", response_model=schemas.Word)
-async def create_word(word: schemas.Word, db: Session = Depends(get_db)) -> schemas.Word:
-    return word.create_word(db, word=word)
+async def create_word(word_input: schemas.Word, db: Session = Depends(get_db)) -> schemas.Word:
+    return word.create_word(db, input_word=word_input)

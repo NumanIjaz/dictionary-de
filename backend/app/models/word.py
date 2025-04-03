@@ -1,45 +1,17 @@
-import enum
 import uuid
-from app.database import Base
 from sqlalchemy import Column, String, DateTime, Enum, Boolean, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 from sqlalchemy.dialects.postgresql import UUID
 
-class PartOfSpeechEnum(enum.Enum):
-    NOUN = "noun"
-    VERB = "verb"
-    ADJECTIVE = "adjective"
-    ADVERB = "adverb"
-    PRONOUN = "pronoun"
-    PREPOSITION = "preposition"
-    CONJUNCTION = "conjunction"
-    ARTICLE = "article"
-    NUMERAL = "numeral"
-    OTHER = "other"
-
-class GenderEnum(enum.Enum):
-    MASCULINE = "masculine"
-    FEMININE = "feminine"
-    NEUTRAL = "neutral"
-    OTHER = "other"
-
-class AuxiliaryVerbEnum(enum.Enum):
-    HABEN = "haben"
-    SEIN = "sein"
-
-class InflectionCategory(enum.Enum):
-    NOUN = "noun"
-    VERB = "verb"
-    ADJECTIVE = "adjective"
-    PRONOUN = "pronoun"
-    OTHER = "other"
-
-class InflectionCase(enum.Enum):
-    NOMINATIVE = "nominative"
-    ACCUSATIVE = "accusative"
-    DATIVE = "dative"
-    GENITIVE = "genitive"
+from app.database import Base
+from app.enums import (
+    PartOfSpeechEnum,
+    GenderEnum,
+    AuxiliaryVerbEnum,
+    InflectionCategoryEnum,
+    InflectionCaseEnum,
+)
 
 class Word(Base):
     __tablename__ = "words"
@@ -57,7 +29,7 @@ class Word(Base):
     comparative = Column(String(255), nullable=True)
     superlative = Column(String(255), nullable=True)
 
-    inclections: Mapped[list["WordInflection"]] = relationship(
+    inflections: Mapped[list["WordInflection"]] = relationship(
         back_populates="word", cascade="all, delete"
     )
 
@@ -72,7 +44,7 @@ class WordInflection(Base):
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     word_id: Mapped[UUID] = mapped_column(ForeignKey("words.id"))
-    word: Mapped["Word"] = relationship(back_populates="inclections")
+    word: Mapped["Word"] = relationship(back_populates="inflections")
 
-    category = Column(Enum(InflectionCategory), nullable=False)
-    inflection_case = Column(Enum(InflectionCase), nullable=True)
+    category = Column(Enum(InflectionCategoryEnum), nullable=False)
+    inflection_case = Column(Enum(InflectionCaseEnum), nullable=True)
