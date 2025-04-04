@@ -34,3 +34,19 @@ class InflectionCaseEnum(enum.Enum):
     ACCUSATIVE = "accusative"
     DATIVE = "dative"
     GENITIVE = "genitive"
+
+class InflectionTenseEnum(enum.Enum):
+    PRESENT = "present"
+    PRETERITE = "preterite"
+    PERFECT = "perfect"
+    PLUPERFECT = "pluperfect"
+    FUTURE_I = "future_I"
+    FUTURE_II = "future_II"
+    OTHER = "other"
+
+class InflectionMoodEnum(enum.Enum):
+    INDICATIVE = "indicative"
+    SUBJUNCTIVE_I = "subjunctive_I"
+    SUBJUNCTIVE_II = "subjunctive_II"
+    IMPERATIVE = "imperative"
+    OTHER = "other"
